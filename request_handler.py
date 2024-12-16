@@ -1,5 +1,6 @@
 from fastapi import FastAPI, HTTPException
-from books_service import get_book_by_isbn, get_a_book_details
+import books_service 
+from models import BookModel
 
 app = FastAPI()
 
@@ -13,7 +14,7 @@ def get_book(book_id: str):
     if not 10 <= len(book_id) <=13:
           raise HTTPException(status_code=400, detail="Invalid ISBN format")
     
-    book_data = get_book_by_isbn(book_id)
+    book_data = books_service.get_book_by_isbn(book_id)
     if not book_data:
         raise HTTPException(status_code=404, detail="Book not found")
     
@@ -23,6 +24,10 @@ def get_book(book_id: str):
 
 @app.get("/book/details/{book_id}")
 def get_book_details(book_id: str):
-    book_details = get_a_book_details(book_id)
+    book_details = books_service.get_a_book_details(book_id)
     book_data = {"isbn": book_id, "details": book_details}
     return book_data
+
+@app.post("/book")
+def add_new_book(book: BookModel):
+    return books_service.add_a_book(book)

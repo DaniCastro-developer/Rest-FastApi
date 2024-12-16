@@ -1,3 +1,6 @@
+from models import BookModel
+from fastapi import HTTPException
+
 books = [
     {
     "isbn": "19920043920-1",
@@ -31,3 +34,13 @@ def get_a_book_details(isbn):
     for book in books:
         if book["isbn"] == isbn:
             return book["details"]
+        
+def add_a_book(book_request: BookModel):
+    for book in books:
+        if book["isbn"] == book_request.isbn:
+            raise HTTPException(
+                status_code=400, detail=f"Book with ISBN {book_request.isbn} already exists."
+            )
+        
+    books.append(book)
+    return book

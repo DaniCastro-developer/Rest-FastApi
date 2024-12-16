@@ -9,5 +9,6 @@ def __dict__(self):
     return {
     "isbn": self.isbn,
     "name": self.name,
-    "publisher": self.publisher
+    "publisher": self.publisher,
+    "year": self.year
     }
