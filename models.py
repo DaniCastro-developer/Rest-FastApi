@@ -5,3 +5,7 @@ class BookModel(BaseModel):
     name: str
     publisher: str
     year: int
+
+class BookReviewModel(BaseModel):
+    isbn: str
+    review: str
